@@ -1,3 +1,9 @@
+/*
+Ralaiarisoa Ranto Andrianjohany
+MySQL - 5.6.17 : Database - evote
+*********************************************************************
+*/
+
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -139,6 +145,11 @@ CREATE TABLE `election` (
   KEY `FK_elecPays` (`codePays`),
   KEY `FK_elecReg2` (`codeReg`),
   KEY `FK_orgElection` (`Organisateur`),
+  KEY `TYPE` (`TYPE`),
+  KEY `TYPE_2` (`TYPE`),
+  KEY `modeDeScrutin` (`modeDeScrutin`),
+  CONSTRAINT `election_ibfk_2` FOREIGN KEY (`modeDeScrutin`) REFERENCES `scrutin` (`scrutinId`),
+  CONSTRAINT `election_ibfk_1` FOREIGN KEY (`TYPE`) REFERENCES `typeelection` (`typeElectionId`),
   CONSTRAINT `FK_elecCom` FOREIGN KEY (`codeCom`) REFERENCES `commune` (`codeCom`),
   CONSTRAINT `FK_elecDep` FOREIGN KEY (`codeDep`) REFERENCES `departement` (`codeDep`),
   CONSTRAINT `FK_elecPays` FOREIGN KEY (`codePays`) REFERENCES `pays` (`codePays`),
@@ -228,6 +239,33 @@ CREATE TABLE `region` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `region` */
+
+/*Table structure for table `scrutin` */
+
+DROP TABLE IF EXISTS `scrutin`;
+
+CREATE TABLE `scrutin` (
+  `scrutinId` int(11) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`scrutinId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `scrutin` */
+
+/*Table structure for table `typeelection` */
+
+DROP TABLE IF EXISTS `typeelection`;
+
+CREATE TABLE `typeelection` (
+  `typeElectionId` int(11) NOT NULL DEFAULT '0',
+  `description` text,
+  PRIMARY KEY (`typeElectionId`),
+  UNIQUE KEY `typeElectionId_2` (`typeElectionId`),
+  KEY `typeElectionId` (`typeElectionId`),
+  KEY `typeElectionId_3` (`typeElectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `typeelection` */
 
 /*Table structure for table `utilisateur` */
 
