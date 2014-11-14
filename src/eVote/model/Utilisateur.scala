@@ -1,6 +1,6 @@
 package eVote.model
 
-trait Utilisateur {	
+trait Utilisateur {
 	def seConnecter(login: String, password: String):Boolean;
-	def seDeconnecter(login: String):Boolean;
+	def seDeconnecter(login: String):Boolean
 }
