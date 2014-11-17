@@ -5,15 +5,15 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 
-class Organisateur extends Utilisateur{
+class Organisateur extends Utilisateur with Election{
   
-    var oid =0
-    var pseudo=""
-    var mdp=""
-    var flag=0
-    var nom=""
-    var adresse=""
-    var telephone=""
+    var oid:Int =_
+    var pseudo:String=_
+    var mdp:String=_
+    var flag:Int=_
+    var nom:String=_
+    var adresse:String=_
+    var telephone:String=_
     
 	def seConnecter(login: String, password: String):Boolean={
 	  var connect = false
@@ -156,6 +156,10 @@ class Organisateur extends Utilisateur{
 	
 	def creerElectionNationale(nom: String, pays: Int, sDate:String, modeDeScrutin:Int):Unit={	
 	    var c = DBConnexion.conn()
+	    this.name = nom
+	    this.codePays = pays
+	    this.dateElection = sDate
+	    this.modeDeScrutin = modeDeScrutin
 		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
 		var prepare = c.prepareStatement("INSERT INTO election (nom, organisateur, codepays, date, type, modedescrutin) VALUES('"+nom+"', '"+oid+"', '"+pays+"', '"+sDate+"', 2, '"+modeDeScrutin+"')")
 		prepare.executeUpdate()
@@ -164,6 +168,10 @@ class Organisateur extends Utilisateur{
 	
 	def creerElectionRegionale(nom: String, region: Int, sDate:String, modeDeScrutin:Int):Unit={	 
 		var c = DBConnexion.conn()
+		this.name = nom
+	    this.codeRegion  = region
+	    this.dateElection = sDate
+	    this.modeDeScrutin = modeDeScrutin
 		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
 		var prepare = c.prepareStatement("INSERT INTO election (nom, organisateur, codereg, date, type, modedescrutin) VALUES('"+nom+"', '"+oid+"', '"+region+"', '"+sDate+"', 2, '"+modeDeScrutin+"')")
 		prepare.executeUpdate()
@@ -172,6 +180,10 @@ class Organisateur extends Utilisateur{
 	
 	def creerElectionDepartementale(nom: String, dep: Int, sDate:String, modeDeScrutin:Int):Unit={
 	    var c = DBConnexion.conn()
+	    this.name = nom
+	    this.codeDep  = dep
+	    this.dateElection = sDate
+	    this.modeDeScrutin = modeDeScrutin
 		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
 		var prepare = c.prepareStatement("INSERT INTO election (nom, organisateur, codedep, date, type, modedescrutin) VALUES('"+nom+"', '"+oid+"', '"+dep+"', '"+sDate+"', 2, '"+modeDeScrutin+"')")
 		prepare.executeUpdate()
@@ -180,6 +192,10 @@ class Organisateur extends Utilisateur{
 	
 	def creerElectionCommunale(nom: String, com: Int, sDate:String, modeDeScrutin:Int):Unit={ 
 	    var c = DBConnexion.conn()
+	    this.name = nom
+	    this.codeCommune  = com
+	    this.dateElection = sDate
+	    this.modeDeScrutin = modeDeScrutin
 		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
 		var prepare = c.prepareStatement("INSERT INTO election (nom, organisateur, codecom, date, type, modedescrutin) VALUES('"+nom+"', '"+oid+"', '"+com+"', '"+sDate+"', 2, '"+modeDeScrutin+"')")
 		prepare.executeUpdate()
@@ -193,7 +209,11 @@ class Organisateur extends Utilisateur{
 	}
 	
 	def ajouterCandidat(election: Int, candidat: Int, parti:Int):Unit={
-	  
+		var c = DBConnexion.conn()
+		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
+		var prepare = c.prepareStatement("INSERT INTO candidat (codecandidat, electionid, codeparti) VALUES('"+candidat+"', '"+election+"', '"+parti+"')")
+		prepare.executeUpdate()
+		c.close()
 	}
 	
 	def retirerCandidat(candidat: Int):Unit={
@@ -228,16 +248,36 @@ class Organisateur extends Utilisateur{
 		  var c = DBConnexion.conn()
 		  var li:List[String] = List()
 	      val statement = c.createStatement()
-	      val resultSet = statement.executeQuery("SELECT nom, date, description FROM election INNER JOIN scrutin ON  election.modedescrutin = scrutin.scrutinid WHERE date >= now()")
+	      val resultSet = statement.executeQuery("SELECT electionid, nom, date, description FROM election INNER JOIN scrutin ON  election.modedescrutin = scrutin.scrutinid WHERE date >= now()")
 	      while (resultSet.next()) {
+	        val electionId = resultSet.getString("electionid")
 	        val nom = resultSet.getString("nom")
 	        val dateScrutin = resultSet.getString("date")
 	        val modeScrutin = resultSet.getString("description")
-	        val somme = nom+" | "+dateScrutin+" | "+modeScrutin
+	        val somme = electionId+"-"+nom+"-"+dateScrutin+"-"+modeScrutin
 	        li = somme::li
 	      }
-	  c.close()
-	  return li
+		 c.close()
+		 return li
+	}
+	
+	def choisirUneElection(election:Int):Int={
+		  var c = DBConnexion.conn()
+		  var li:List[String] = List()
+	      val statement = c.createStatement()
+	      val resultSet = statement.executeQuery("SELECT electionid,nom, prenoms FROM candidat INNER JOIN personne ON  candidat.codecandidat = personne.personneid WHERE candidat.electionid="+election+" GROUP BY electionid,nom,prenoms")
+	      while (resultSet.next()) {
+	        val electionId = resultSet.getString("electionid").toInt
+	        val nom = resultSet.getString("nom")
+	        val prenoms = resultSet.getString("prenoms")
+	        val somme = nom +" "+prenoms
+	        li = somme::li
+	      }
+		  println("Liste des candidats de l'élection choisie")
+		  var j=0
+		  for (j<-0 until li.size)println((j+1)+"-" + li.apply(j))
+		  c.close()
+		  return election
 	}
 	
 	def listeElectionTermines():List[String] ={

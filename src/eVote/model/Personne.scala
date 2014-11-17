@@ -6,17 +6,17 @@ class Personne() extends Utilisateur{
 	
 	//def ajouterPersonne(nom:String, prenoms:String, adresse:String, telephone:String, dateDeNaissance:String, sexe: String, pays: Int, region: Int, departement: Int, commune: Int, canton: Int, circonscription: Int):Unit={}
 	//def modifierPersonne(personne:Int,nom:String, prenoms:String, adresse:String, telephone:String, dateDeNaissance:String, sexe: String, pays: Int, region: Int, departement: Int, commune: Int, canton: Int, circonscription: Int):Unit={}  
-   var uid = 0
-   var pseudo=""
-   var mdp=""
-   var flag=0
-   var nom = ""
-   var prenoms = ""
-   var region = ""
-   var departement = ""
-   var commune:String = _
-   var canton = ""
-   var circonscription = ""
+   var uid:Int=_
+   var pseudo:String=_
+   var mdp:String=_
+   var flag:Int=_
+   var nom:String =_
+   var prenoms:String =_
+   var region:String =_
+   var departement:String =_
+   var commune:String =_
+   var canton:String =_
+   var circonscription:String =_
   
    def seConnecter(login: String, password: String):Boolean = {
 	  var connect = false
@@ -113,8 +113,9 @@ class Personne() extends Utilisateur{
 		  var c = DBConnexion.conn()
 		  var li:List[String] = List()
 	      val statement = c.createStatement()
-	      val resultSet = statement.executeQuery("SELECT nom, prenoms FROM candidat INNER JOIN personne ON  candidat.codecandidat = personne.personneid WHERE candidat.electionid="+codeElection+" GROUP BY nom,prenoms")/*eto misy diso*/
+	      val resultSet = statement.executeQuery("SELECT codecandidat,nom, prenoms FROM candidat INNER JOIN personne ON  candidat.codecandidat = personne.personneid WHERE candidat.electionid="+codeElection+" GROUP BY codecandidat,nom,prenoms")
 	      while (resultSet.next()) {
+	        val codeCandidat = resultSet.getString("codecandidat")
 	        val nom = resultSet.getString("nom")
 	        val prenoms = resultSet.getString("prenoms")
 	        val somme = nom +" "+prenoms

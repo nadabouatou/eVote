@@ -6,6 +6,8 @@ import java.sql.ResultSet
 
 
 class Electeur extends Personne(){
+	var electeurId:Int=_
+	var idCir:Int=_
 	def  testVote(codeElecteur:Int, election:Int):String={
 		  var c = DBConnexion.conn()
 		  var li = ""

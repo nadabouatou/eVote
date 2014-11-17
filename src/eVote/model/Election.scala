@@ -1,36 +1,14 @@
 package eVote.model
 
-class Election {
-  
-	def eluElectionUninominalUnTour(election: Int): Int={
-	  return 1;
-	}
-	
-	def eluElectionUninominalDeuxTour(election: Int): Int={
-	  return 1;
-	}
-	
-	def eluElectionAliste(election: Int): Int={
-	  return 1;
-	}
-  
-	def listeElectionEnCours():	List[String] ={
-	  val l = Nil;
-	  return l;
-	}
-	
-	def listeTousElection():List[String]={
-	  val l = Nil;
-	  return l;
-	}
-	
-	def listeElectionParCandidat(candidat: Int):List[String]={
-	  val l = Nil;
-	  return l;
-	}
-	
-	def listeElectionParParti(candidat: Int):List[String]={
-	  val l = Nil;
-	  return l;
-	}
+trait Election {
+  var electionId:Int=_
+  var organisateurId:Int=_
+  var codePays:Int=_
+  var codeRegion:Int=_
+  var codeDep:Int=_
+  var codeCommune:Int=_
+  var name:String=_
+  var typeElection:Int=_
+  var dateElection:String=_
+  var modeDeScrutin:Int=_
 }

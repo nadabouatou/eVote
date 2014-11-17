@@ -7,16 +7,22 @@ import java.sql.DriverManager
 import java.sql.Connection
 import eVote.model.Organisateur
 import eVote.model.Personne
-
+import scala.swing._
+import event._
+import java.awt.{ Color, Graphics2D }
+import scala.util.Random
+import javax.swing.JFrame
 
 object main {
 	def main(args: Array[String]):Unit={
 	  
-	  /*
+	  //val fenetre = new Fenetre
+	  //fenetre.fenetre
+	  
 	  var test = false
 	  var sLogin=""
 	  var sMdp=""
-	  val p = new Electeur()
+	  val p = new Organisateur()
 	  while (test==false){
 	  print("Login: ")
 	  sLogin = readLine();
@@ -24,15 +30,17 @@ object main {
 	  sMdp = readLine()
 	  test = p.seConnecter(sLogin, sMdp)
 	  }
-	  println("Liste des élections qui vous sont disponibles:")
 	  
-	  val l = p.listeElectionEnCours(sLogin)
-	  
+	  val l = p.listeElectionEnCours 
+	  println("Liste des élections en cours:") 
 	  var i=0
 	  for (i<-0 until l.size)println((i+1)+"-" + l.apply(i))
 	  
 	  print("Seléctionner une élection: ")
-	  var elec = readLine()
+	  var e = readLine.toInt
+	  p.choisirUneElection(e)
+	  //p.ajouterCandidat(e, 17, 23)
+	  /*var elec = readLine()
 	  println("Liste des candidats de l'élection selectionnée: ")
 	  val candidat = p.listerCandidat(elec.toInt)
 	  
@@ -44,7 +52,7 @@ object main {
 	  val id = p.uid
 	  if(cand.toInt==1) p.voter(20, 2, id)
 	  if(cand.toInt==2) p.voter(21, 2, id)
-	  */
+	  
 	  var test = false
 	  var sLogin=""
 	  var sMdp=""
@@ -56,10 +64,10 @@ object main {
 	  sMdp = readLine()
 	  test = organisateur.seConnecter(sLogin, sMdp)
 	  }
-	  /*organisateur.creerElectionRegionale("Election du conseil régional", 11, "25-12-2014", 1)
+	  organisateur.creerElectionRegionale("Election du conseil régional", 11, "25-12-2014", 1)
 	  organisateur.creerElectionNationale("Election législative", 1, "25-12-2014", 1)
 	  organisateur.creerElectionDepartementale("Election départementale", 75, "25-12-2014", 1)
-	  organisateur.creerElectionCommunale("Election com", 56, "25-12-2014", 1)*/
+	  organisateur.creerElectionCommunale("Election com", 56, "25-12-2014", 1)
 	  val ec = organisateur.listeElectionEnCours()
 	  println("LISTE DES ELECTIONS EN COURS")
 	  var i=0
@@ -70,18 +78,18 @@ object main {
 	  var j=0
 	  for (j<-0 until et.size)println(et.apply(j))
 	  println("")
-	  //val o = new Organisateur();
-	  //o.ajouterElecteur("peter", "peter", "Peter Pan", "", "37 Boulevard Jourdan", "", "27-03-1972", "", "", "", "", "", 1)
-	  //o.ajouterParti("Parti R", "partir", "La Team Rocket", "24-11-2003", "Pokemon Land", "")
-	  /*
-	  //val e = new Electeur()
-	  //val l = p.listeElectionEnCours(sLogin)
-	  //val candidat = p.listerCandidat(2)
-	  //var i=0
-	  //for (i<-0 until l.size)println(l.apply(i))
+	  val o = new Organisateur();
+	  o.ajouterElecteur("peter", "peter", "Peter Pan", "", "37 Boulevard Jourdan", "", "27-03-1972", "", "", "", "", "", 1)
+	  o.ajouterParti("Parti R", "partir", "La Team Rocket", "24-11-2003", "Pokemon Land", "")
 	  
-	  //var j=0
-	  //for (j<-0 until candidat.size)println(candidat.apply(j))
+	  val e = new Electeur()
+	  val l = p.listeElectionEnCours(sLogin)
+	  val candidat = p.listerCandidat(2)
+	  var i=0
+	  for (i<-0 until l.size)println(l.apply(i))
+	  
+	  var j=0
+	  for (j<-0 until candidat.size)println(candidat.apply(j))
 	
 	 
 	 e.voter(4, 2,1)
@@ -93,6 +101,7 @@ object main {
 	 val ol = o.validerElection(2)
 	 var oli=0
 	 for (oli<-0 until ol.size)println(ol.apply(oli))
+	 * 
 	 */
 	}
 }
