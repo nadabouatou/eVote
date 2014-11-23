@@ -12,96 +12,87 @@ import event._
 import java.awt.{ Color, Graphics2D }
 import scala.util.Random
 import javax.swing.JFrame
+import eVote.model.ElectionPresidentielle
+import eVote.model.ModeScrutin
+import eVote.model.ElectionPresidentielle
+
 
 object main {
 	def main(args: Array[String]):Unit={
-	  
-	  //val fenetre = new Fenetre
-	  //fenetre.fenetre
-	  
-	  var test = false
-	  var sLogin=""
-	  var sMdp=""
-	  val p = new Organisateur()
-	  while (test==false){
-	  print("Login: ")
-	  sLogin = readLine();
-	  print("Mot de passe: ")
-	  sMdp = readLine()
-	  test = p.seConnecter(sLogin, sMdp)
-	  }
-	  
-	  val l = p.listeElectionEnCours 
-	  println("Liste des élections en cours:") 
-	  var i=0
-	  for (i<-0 until l.size)println((i+1)+"-" + l.apply(i))
-	  
-	  print("Seléctionner une élection: ")
-	  var e = readLine.toInt
-	  p.choisirUneElection(e)
-	  //p.ajouterCandidat(e, 17, 23)
-	  /*var elec = readLine()
-	  println("Liste des candidats de l'élection selectionnée: ")
-	  val candidat = p.listerCandidat(elec.toInt)
-	  
-	  var j=0
-	  for (j<-0 until candidat.size)println((j+1)+"-" + candidat.apply(j))
-	  
-	  print("Sélectionner votre candidat: ")
-	  var cand = readLine()
-	  val id = p.uid
-	  if(cand.toInt==1) p.voter(20, 2, id)
-	  if(cand.toInt==2) p.voter(21, 2, id)
-	  
-	  var test = false
-	  var sLogin=""
-	  var sMdp=""
-	  val organisateur = new Organisateur()
-	  while (test==false){
-	  print("Login: ")
-	  sLogin = readLine();
-	  print("Mot de passe: ")
-	  sMdp = readLine()
-	  test = organisateur.seConnecter(sLogin, sMdp)
-	  }
-	  organisateur.creerElectionRegionale("Election du conseil régional", 11, "25-12-2014", 1)
-	  organisateur.creerElectionNationale("Election législative", 1, "25-12-2014", 1)
-	  organisateur.creerElectionDepartementale("Election départementale", 75, "25-12-2014", 1)
-	  organisateur.creerElectionCommunale("Election com", 56, "25-12-2014", 1)
-	  val ec = organisateur.listeElectionEnCours()
-	  println("LISTE DES ELECTIONS EN COURS")
-	  var i=0
-	  for (i<-0 until ec.size)println(ec.apply(i))
-	  val et = organisateur.listeElectionTermines()
-	  println("")
-	  println("LISTE DES ELECTION TERMINES")
-	  var j=0
-	  for (j<-0 until et.size)println(et.apply(j))
-	  println("")
-	  val o = new Organisateur();
-	  o.ajouterElecteur("peter", "peter", "Peter Pan", "", "37 Boulevard Jourdan", "", "27-03-1972", "", "", "", "", "", 1)
-	  o.ajouterParti("Parti R", "partir", "La Team Rocket", "24-11-2003", "Pokemon Land", "")
-	  
-	  val e = new Electeur()
-	  val l = p.listeElectionEnCours(sLogin)
-	  val candidat = p.listerCandidat(2)
-	  var i=0
-	  for (i<-0 until l.size)println(l.apply(i))
-	  
-	  var j=0
-	  for (j<-0 until candidat.size)println(candidat.apply(j))
-	
-	 
-	 e.voter(4, 2,1)
-	 e.voter(2, 2,2)
-	 e.voter(2, 2,3)
-	 e.voter(2, 2,4)
-	 
-	 val o = new Organisateur()
-	 val ol = o.validerElection(2)
-	 var oli=0
-	 for (oli<-0 until ol.size)println(ol.apply(oli))
-	 * 
-	 */
+		var test = false
+		var sLogin=""
+		var sMdp=""
+		
+		val p = new Organisateur()
+		while (test==false){
+		print("Login: ")
+		sLogin = readLine();
+		print("Mot de passe: ")
+		sMdp = readLine()
+		test = p.seConnecter(sLogin, sMdp)
+		}
+		println("->" + p.nom)
+		println("->" + p.prenoms)
+		println("->" + p.dateNaissance)
+		println("->" + p.adresse)
+		println("->" + p.sexe)
+		
+		
+		
+		/*
+		p.voter(24, 26, 24)
+		p.voter(24, 26, 25)
+		p.voter(26, 26, 26)
+		p.voter(25, 26, 27)
+		p.voter(24, 26, 28)
+		p.voter(24, 26, 28)
+		* 
+		*/
+		/*
+		val o = new Organisateur()
+		while (test==false){
+		print("Login: ")
+		sLogin = readLine();
+		print("Mot de passe: ")
+		sMdp = readLine()
+		test = o.seConnecter(sLogin, sMdp)
+		}
+		val op = o.validerElection(26)
+		var i=0
+		for (i<-0 until op.size)println((i+1) + "-" + op.apply(i))
+		* 
+		*/
+		
+		/*
+		p.ajouterElecteur("electeur2", "electeur2", "NomElecteur2", "PrenomsElecteur2", "", "", "12-12-1985", "M", "11", "75", "56", "15", 2)
+		p.ajouterElecteur("electeur3", "electeur3", "NomElecteur3", "PrenomsElecteur3", "", "", "12-12-1985", "M", "11", "75", "56", "15", 2)
+		p.ajouterElecteur("electeur4", "electeur4", "NomElecteur4", "PrenomsElecteur4", "", "", "12-12-1985", "M", "11", "75", "56", "15", 2)
+		p.ajouterElecteur("electeur5", "electeur5", "NomElecteur5", "PrenomsElecteur5", "", "", "12-12-1985", "M", "11", "75", "56", "15", 2)
+		* 
+		*/
+		/*
+		p.ajouterCandidat(26, 24)
+		p.ajouterCandidat(26, 25)
+		p.ajouterCandidat(26, 26)
+		* 
+		*/
+		
+		/*p.bgCreerElectionNationale("Best Burger Ever", 1, "23-11-2014", 1)
+		
+		val ec = p.listeElectionEnCours
+		var i=0
+		for (i<-0 until ec.size)println((i+1) + "-" + ec.apply(i))
+		
+		val ps = new Electeur
+		ps.ajouterElecteur("electeur1", "electeur1", "NomElecteur1", "PrenomsElecteur1", "", "", "12-12-1985", "M", "11", "75", "56", "15", 2)
+		* 
+		*/
+		/*
+		println("Elections en cours: ")
+		val ec = p.listeElectionEnCours("electeur1")
+		var i=0
+		for (i<-0 until ec.size)println((i+1) + "-" + ec.apply(i))
+		* 
+		*/
 	}
 }
