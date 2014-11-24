@@ -2,7 +2,15 @@ package eVote.model
 
 import eVote.controler.DBConnexion
 
-class Departement {
+class Departement(_codeReg: Int=0, _codeDep:Int=0,_nom: String="") {
+  
+  
+  var codeDep: Int = _codeDep
+  var codeReg: Int = _codeReg
+  var codeCom: Int = _
+  var nom: String = _nom 
+  
+  val commune = new Commune()
   
   // pour ajouter dans la table departement
   def ajouterDepartement(codeRegion:Int,codeDepartement:Int,nom:String):Unit={
@@ -16,6 +24,14 @@ class Departement {
   // pour supprimer dans la table departement
   def supprimerDepartement(codeDepartement:Int):Unit={
     val st = DBConnexion.conn().createStatement();
+    
+    val rs = st.executeQuery("SELECT codecom FROM commune WHERE codedep=" + codeDepartement )
+      while (rs.next()) {
+        val com = rs.getString("codecom")
+        codeCom   = com.toInt
+        commune.supprimerCommune(codeCom);
+      }
+    
     val req="DELETE from departement where codedep=" + codeDepartement;
     st.execute(req);
     st.close();

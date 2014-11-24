@@ -2,8 +2,11 @@ package eVote.model
 
 import eVote.controler.DBConnexion
 
-class Circonscription {
+class Circonscription(_idCir: Int=0, _numero:Int=0) {
 
+	var idCir: Int = _idCir
+  var numero: Int = _numero
+  
   // pour ajouter dans la table circonscription
   def ajouterCircons(idCir:Int,numero:Int):Unit={
     

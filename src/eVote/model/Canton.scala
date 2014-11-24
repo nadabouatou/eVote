@@ -2,7 +2,11 @@ package eVote.model
 
 import eVote.controler.DBConnexion
 
-class Canton {
+class Canton(_codeCom: Int=0, _codeCan:Int=0,_nom: String="") {
+  
+  var codeCom: Int = _codeCom
+  var codeCan: Int = _codeCan
+  var nom: String = _nom
   
   // pour ajouter dans la table canton
   def ajouterCanton(codeCommunale:Int,codeCanton:Int,nom:String):Unit={
@@ -17,6 +21,8 @@ class Canton {
   def supprimerCanton(codeCanton:Int):Unit={
     val st = DBConnexion.conn().createStatement();
     val req="DELETE from canton where codecan=" + codeCanton;
+    val reqCanCir="DELETE from cancir where codecan=" + codeCanton;
+    st.execute(reqCanCir);
     st.execute(req);
     st.close();
   }
