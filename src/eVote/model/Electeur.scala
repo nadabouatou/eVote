@@ -4,8 +4,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 
-
-class Electeur extends Personne with BulletinDeVote with Circonscription {
+class Electeur extends Personne with BulletinDeVote with Candidat{
 	
 	def ajouterElecteur(login:String, motDePasse:String, nom:String, prenoms:String, adresse:String, telephone:String, dateDeNaissance:String, sexe:String, region:String, departement:String, commune:String, canton:String, circonscription:Int):Unit={
 		val t = testLogin(login)
@@ -16,12 +15,12 @@ class Electeur extends Personne with BulletinDeVote with Circonscription {
 		}
 		else {println("Ce login existe déjà")}
 	}
-	def supprimerElecteur(pid:Int):Unit={
+	def deleteElecteurFromDB(pid:Int):Unit={
 		var c = DBConnexion.conn()
 		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
 		var prepare = c.prepareStatement("DELETE FROM electeur WHERE electeurid = '"+pid+"")
 		prepare.executeUpdate()
-		supprimerPersonne(pid)
+		deletePersonneFromDB(pid)
 		c.close()	
 	}
 	
@@ -33,5 +32,11 @@ class Electeur extends Personne with BulletinDeVote with Circonscription {
 			prepare.executeUpdate()
 			c.close()
 	}
-	
+	  def ajouterCandidat(pElectionId:Int):Unit={
+		var c = DBConnexion.conn()
+		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
+		var prepare = c.prepareStatement("INSERT INTO candidat (codecandidat, electionid) VALUES('"+uid+"', '"+pElectionId+"')")
+		prepare.executeUpdate()
+		c.close()
+	}
 }

@@ -1,15 +1,18 @@
 package eVote.model
 
-class Pays {
-	def ajouterPays(code: Int, nom: String):Unit={
+class Pays(val pPaysId:Int,val pNomPays:String) {
+	var paysId=pPaysId
+	var nomPays = pNomPays
+	
+	def ajouterPays:Unit={
 	  
 	}
 	
-	def modifierPays(code: Int, nom: String):Unit={
+	def modifierPays:Unit={
 	  
 	}
 	
-	def supprimerPays(code:Int):Unit={
+	def supprimerPays:Unit={
 	  
 	}
 }

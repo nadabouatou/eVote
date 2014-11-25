@@ -19,10 +19,10 @@ trait BulletinDeVote {
         val code = resultSet.getString("electeurid")
         val somme = electionId +"|"+code
         li = somme
-      }
+      	}
 	  c.close()
 	  return li
-}
+	}
 	
 	def voter(codeCandidat: Int, electionId: Int, electeurId:Int):Unit ={
 		val test = testVote(electeurId, electionId)

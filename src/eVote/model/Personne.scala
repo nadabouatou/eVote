@@ -3,42 +3,20 @@ package eVote.model
 import eVote.controler.DBConnexion
 import java.sql.ResultSet
 
-class Personne(
-   val _uid:Int,
-   val _pseudo:String,
-   val _mdp:String,
-   val _flag:Int,
-   val _nom:String,
-   val _prenoms:String,
-   val _region:Int,
-   val _departement:Int,
-   val _commune:Int,
-   val _canton:Int,
-   val _circonscription:Int,
-   val _adresse:String,
-   val _tel:String,
-   val _dateNaissance:String,
-   val _sexe:String
-	) 
-	extends Utilisateur
-	{
-	
-	//def ajouterPersonne(nom:String, prenoms:String, adresse:String, telephone:String, dateDeNaissance:String, sexe: String, pays: Int, region: Int, departement: Int, commune: Int, canton: Int, circonscription: Int):Unit={}
-	//def modifierPersonne(personne:Int,nom:String, prenoms:String, adresse:String, telephone:String, dateDeNaissance:String, sexe: String, pays: Int, region: Int, departement: Int, commune: Int, canton: Int, circonscription: Int):Unit={}  
+trait Personne extends Utilisateur{
 
-   var nom:String = _nom
-   var prenoms:String = _prenoms
-   var region:Int = _region
-   var departement:Int = _departement 
-   var commune:Int = _commune
-   var canton:Int = _canton 
-   var circonscription:Int = _circonscription 
-   var adresse:String = _adresse 
-   var tel:String= _tel 
-   var dateNaissance:String=_dateNaissance
-   var sexe:String = _sexe
+   var nom:String = _
+   var prenoms:String = _
+   var region:Int = _
+   var departement:Int = _
+   var commune:Int = _
+   var canton:Int = _
+   var circonscription:Int = _
+   var adresse:String = _
+   var tel:String= _
+   var dateNaissance:String=_
+   var sexe:String = _
    
-   def this() = this(0,"","",0,"","",0,0,0,0,0,"","","","")
    
    def seConnecter(login: String, password: String):Boolean = {
 	  var connect = false
@@ -121,12 +99,12 @@ class Personne(
 	  return f 
 	}
 	
-	def listeElectionEnCours(login:String):List[String] ={
+	def listeElectionEnCours:List[String] ={
 		  
 		  var c = DBConnexion.conn()
 		  var li:List[String] = List()
 	      val statement = c.createStatement()
-	      val resultSet = statement.executeQuery("SELECT nom, date, description FROM election INNER JOIN scrutin ON  election.modedescrutin = scrutin.scrutinid WHERE date >= now() AND ((type = 1) OR(type = 2 AND codereg='"+region.toInt +"') OR (type = 3 AND codecom='"+commune.toInt +"') OR (type = 4 AND codedep='"+departement.toInt+"'))")
+	      val resultSet = statement.executeQuery("SELECT nom, date, description FROM election INNER JOIN scrutin ON  election.modedescrutin = scrutin.scrutinid WHERE date >= now() AND ((type = 1) OR(type = 2 AND codereg='"+region +"') OR (type = 3 AND codecom='"+commune +"') OR (type = 4 AND codedep='"+departement+"'))")
 	      while (resultSet.next()) {
 	        val nom = resultSet.getString("nom")
 	        val dateScrutin = resultSet.getString("date")
@@ -154,16 +132,16 @@ class Personne(
 		  return li;
 	}
 	
-	def ajouterPersonne(login:String, motDePasse:String, nom:String, prenoms:String, adresse:String, telephone:String, dateDeNaissance:String, sexe:String, region:String, departement:String, commune:String, canton:String, circonscription:Int):Unit={
-		val t = testLogin(login)
+	def saveToDB:Unit={
+		val t = testLogin(this.pseudo)
 		if(t == ""){
-		  majTableUtilisateur(login, motDePasse)
-		  majTablePersonne(login, nom, prenoms, adresse, telephone, dateDeNaissance, sexe, region, departement, commune, canton, circonscription)
+		  majTableUtilisateur(this.pseudo , this.mdp)
+		  majTablePersonne(this.pseudo, this.nom , this.prenoms , this.adresse , this.tel , this.dateNaissance , this.sexe , this.region.toString , this.departement.toString , this.commune.toString  , this.canton.toString  , this.circonscription )
 		}
 		else {println("Ce login existe déjà")}
 	}
 	
-	def supprimerPersonne(pid:Int):Unit={
+	def deletePersonneFromDB(pid:Int):Unit={
 		var c = DBConnexion.conn()
 		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
 		var prepare = c.prepareStatement("DELETE FROM personne WHERE personneid = '"+pid+"")
@@ -214,5 +192,4 @@ class Personne(
 		prepare.executeUpdate()
 		c.close()
 	}
-	
 }
