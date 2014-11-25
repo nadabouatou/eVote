@@ -5,4 +5,4 @@ README
  - Le fichier Modèle physique contient le modèle physique
  - Le fichier diagramme contient les diagrammes de cas d'utilisation, de séquence et de classes
  
- Remarques : Le fichier docx est plus recommandé parceque pour le pdf les pointillés ne sont pas très bien affichés
+ Remarques : Le fichier rtf est plus recommandé pour le diagramme de classes parceque pour le pdf les pointillés ne sont pas très bien affichés
