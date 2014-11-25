@@ -1,26 +1,12 @@
 package eVote.model
 
-<<<<<<< HEAD
-class Region(val pPaysId:Int, val pRegionId:Int, val pNomRegion:String) {
-	
-	var paysId = pPaysId 
-	var regionId = pRegionId 
-	var nomRegion = pNomRegion 
-  
-	def ajouterRegion(pays: Int, codeRegion: Int, nom: String):Unit={}
-	def modifierRegion(codeRegion: Int,codePays: Int, nomRegion: String):Unit={}
-	def supprimerRegion(codeRegion: Int):Unit={}
-=======
 import eVote.controler.DBConnexion
 
-class Region(_codePays: Int=0, _codeReg:Int=0,_nom: String="") {
+class Region(val pPaysId: Int=0, val pRegionId:Int=0,val pNomRegion: String="") {
   
-  var codePays: Int = _codePays
-  var codeReg: Int = _codeReg
-  var codeDep: Int = _
-  var nom: String = _nom 
-  
-  val dep = new Departement();
+  var paysId: Int = pPaysId
+  var regionId: Int = pRegionId
+  var nomRegion: String = pNomRegion 
   
   // Pour ajouter dans la table region
   def ajouterRegion(codePays: Int, codeRegion: Int, nom: String):Unit={
@@ -30,7 +16,7 @@ class Region(_codePays: Int=0, _codeReg:Int=0,_nom: String="") {
     st.execute(req);
     st.close();
   }
-  
+  /*
   // pour supprimer dans la table region
   def supprimerRegion(codeRegion: Int):Unit={
     val st = DBConnexion.conn().createStatement();
@@ -46,6 +32,8 @@ class Region(_codePays: Int=0, _codeReg:Int=0,_nom: String="") {
     st.execute(req);
     st.close();
   }
+  * 
+  */
   
   // pour modifier le code d'un pays dans la table region
   def modifierCodePaysRegion(codeRegion: Int,codePays: Int):Unit={
@@ -86,9 +74,5 @@ class Region(_codePays: Int=0, _codeReg:Int=0,_nom: String="") {
     st.close();
      
    }
-   
-   
-  
 
->>>>>>> origin/master
 }

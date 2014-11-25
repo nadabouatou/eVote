@@ -1,26 +1,15 @@
 package eVote.model
 
-<<<<<<< HEAD
-class Departement(val pRegionId:Int, val pDepartementId:Int, val pNomDepartement:String) {
-	var regionId = pRegionId 
-	var departementId = pDepartementId 
-	var nomDepartement = pNomDepartement 
-  
-	def ajouterDepartement(Region:Int,codeDepartement:Int,nom:String):Unit={}
-	def modfierDepartement(codeDepartement:Int, CodeRegion:Int, nomDepartement:String):Unit={}
-	def supprimerDepartement(codeDepartement:Int):Unit={}
-=======
+
 import eVote.controler.DBConnexion
 
-class Departement(_codeReg: Int=0, _codeDep:Int=0,_nom: String="") {
+class Departement(val pRegionId: Int=0, val pDepartementId:Int=0,val pNomDepartement: String="") {
   
   
-  var codeDep: Int = _codeDep
-  var codeReg: Int = _codeReg
-  var codeCom: Int = _
-  var nom: String = _nom 
+  var departementId: Int = pRegionId
+  var regionId: Int = pDepartementId
+  var nomDepartement: String = pNomDepartement 
   
-  val commune = new Commune()
   
   // pour ajouter dans la table departement
   def ajouterDepartement(codeRegion:Int,codeDepartement:Int,nom:String):Unit={
@@ -32,6 +21,7 @@ class Departement(_codeReg: Int=0, _codeDep:Int=0,_nom: String="") {
   }
   
   // pour supprimer dans la table departement
+  /*
   def supprimerDepartement(codeDepartement:Int):Unit={
     val st = DBConnexion.conn().createStatement();
     
@@ -46,6 +36,8 @@ class Departement(_codeReg: Int=0, _codeDep:Int=0,_nom: String="") {
     st.execute(req);
     st.close();
   }
+  * 
+  */
   
    // pour modifier le code d'une region dans la table departement
   def modifierCodeRegionDepartement(codeDepar: Int,codeRegion: Int):Unit={
@@ -86,6 +78,5 @@ class Departement(_codeReg: Int=0, _codeDep:Int=0,_nom: String="") {
     st.close();
      
    }
-  
->>>>>>> origin/master
+
 }

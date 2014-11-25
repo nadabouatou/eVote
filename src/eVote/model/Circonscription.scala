@@ -1,20 +1,9 @@
 package eVote.model
-
-<<<<<<< HEAD
-class Circonscription{
-	
-	var cantonId:Int=_
-	var circonscriptionId:Int=_
-	var circonscriptionName:String=_
-  
-	def ajouterCanton(canton: Int,numeroCirconscription: Int):Unit={}
-	def supprimerCanton(codeCanton:Int):Unit={}
-=======
 import eVote.controler.DBConnexion
 
 class Circonscription(_idCir: Int=0, _numero:Int=0) {
 
-	var idCir: Int = _idCir
+  var idCir: Int = _idCir
   var numero: Int = _numero
   
   // pour ajouter dans la table circonscription
@@ -33,8 +22,4 @@ class Circonscription(_idCir: Int=0, _numero:Int=0) {
     st.execute(req);
     st.close();
   }
-  
-  
-  
->>>>>>> origin/master
 }

@@ -1,30 +1,11 @@
 package eVote.model
 
-<<<<<<< HEAD
-class Pays(val pPaysId:Int,val pNomPays:String) {
-	var paysId=pPaysId
-	var nomPays = pNomPays
-	
-	def ajouterPays:Unit={
-	  
-	}
-	
-	def modifierPays:Unit={
-	  
-	}
-	
-	def supprimerPays:Unit={
-	  
-=======
 import eVote.controler.DBConnexion
 
-class Pays(val _codePays: Int=0, val _nom:String="") {
+class Pays(val pPaysId: Int=0, val pNomPays:String="") {
  
-  var codePays: Int = _codePays 
-  var nom: String = _nom 
-  var codeRegion: Int = _
-  
-  val reg = new Region()
+  var paysId: Int = pPaysId 
+  var nomPays: String = pNomPays 
   
   def ajouterPays(codePays: Int, nom:String):Unit={
     
@@ -33,9 +14,8 @@ class Pays(val _codePays: Int=0, val _nom:String="") {
     st.execute(req);
     st.close();
     
->>>>>>> origin/master
 	}
-  
+ /* 
   def supprimerPays(codePays: Int):Unit={
     val st = DBConnexion.conn().createStatement();
     
@@ -50,7 +30,10 @@ class Pays(val _codePays: Int=0, val _nom:String="") {
     st.execute(req);
     st.close();
   }
+  * 
+  */
   
+
   def modifierNomPays(codePays:Int,nom:String):Unit={
     
     val st = DBConnexion.conn().createStatement();
