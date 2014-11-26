@@ -104,12 +104,14 @@ trait Personne extends Utilisateur{
 		  var c = DBConnexion.conn()
 		  var li:List[String] = List()
 	      val statement = c.createStatement()
-	      val resultSet = statement.executeQuery("SELECT nom, date, description FROM election INNER JOIN scrutin ON  election.modedescrutin = scrutin.scrutinid WHERE date >= now() AND ((type = 1) OR(type = 2 AND codereg='"+region +"') OR (type = 3 AND codecom='"+commune +"') OR (type = 4 AND codedep='"+departement+"'))")
+	      val resultSet = statement.executeQuery("SELECT electionid, nom, datedebut, datefin, description FROM election INNER JOIN scrutin ON  election.modedescrutin = scrutin.scrutinid WHERE datedebut <= now() AND now()<= datefin AND ((type = 1) OR(type = 2 AND codereg='"+region +"') OR (type = 3 AND codecom='"+commune +"') OR (type = 4 AND codedep='"+departement+"'))")
 	      while (resultSet.next()) {
+	        val id = resultSet.getString("electionid")
 	        val nom = resultSet.getString("nom")
-	        val dateScrutin = resultSet.getString("date")
+	        val dateDebut= resultSet.getString("datedebut")
+	        val dateFin= resultSet.getString("datefin")
 	        val modeScrutin = resultSet.getString("description")
-	        val somme = nom+" | "+dateScrutin+" | "+modeScrutin
+	        val somme = "Id: "+ id + " => " + nom +" | Du "+dateDebut+ " au "+ dateFin + " | "+modeScrutin
 	        li = somme::li
 	      }
 	  c.close()
@@ -125,7 +127,7 @@ trait Personne extends Utilisateur{
 	        val codeCandidat = resultSet.getString("codecandidat")
 	        val nom = resultSet.getString("nom")
 	        val prenoms = resultSet.getString("prenoms")
-	        val somme = nom +" "+prenoms
+	        val somme = "Id: "+codeCandidat+" => "+nom +" "+prenoms
 	        li = somme::li
 	      }
 		  c.close()

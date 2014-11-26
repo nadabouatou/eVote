@@ -12,10 +12,12 @@ import eVote.model.ElectionNationale
 import eVote.model.ElectionUtilities
 import eVote.model.ElectionUtilities
 import eVote.model.Candidat
+import eVote.model.PublicationResultat
+import eVote.model.ElectionRegionale
 
 
 
-class Utilities {
+class UtilitiesOrganisateur {
 	def choixMenu:Int={
 	  	var choix:Int=0
 	  	
@@ -23,16 +25,16 @@ class Utilities {
 		println("1 - Ajouter une élection")
 		println("2 - Publier les résultats d'une élection")
 		println("3 - Ajouter des candidats à une élection")
-		println("4 - Annuler une élection")
-		println("5 - Ajouter des électeurs")
-		println("6 - Supprimer des électeurs")
-		println("8 - Modifier des électeurs")
-		println("9 - Modifier une élection")
-		println("10 - Ajouter des régions")
-		println("11 - Ajouter des départements")
-		println("12 - Ajouter des communes")
-		println("13 - Ajouter des cantons")
-		println("14 - Ajouter des circonscription")
+		//println("4 - Annuler une élection")
+		//println("5 - Ajouter des électeurs")
+		//println("6 - Supprimer des électeurs")
+		//println("8 - Modifier des électeurs")
+		//println("9 - Modifier une élection")
+		//println("10 - Ajouter des régions")
+		//println("11 - Ajouter des départements")
+		//println("12 - Ajouter des communes")
+		//println("13 - Ajouter des cantons")
+		//println("14 - Ajouter des circonscription")
 		println("15 - Lister des élections")
 		println("16 - Quit")
 		
@@ -69,6 +71,7 @@ class Utilities {
     	  var choix:Int=0
     	  choix = menuElection
     	  if(choix==1) this.AddElectionNationale
+    	  if(choix==2) this.AddElectionRegionale
       }
       if(x==15){
     	  var choix:Int=0
@@ -83,8 +86,28 @@ class Utilities {
     	  this.addCandidat
     	  readLine
       }
+      if(x==2){
+    	  var choix:Int=0
+    	  println("Publication de resultats")
+    	  ListElectionTerminees
+    	  print("Votre Choix: ")
+    	  val choice = readLine.toInt
+    	  Publication(choice)
+    	  readLine
+      }
    }
-	
+
+   private def Publication(election:Int):Unit={
+	  var li:List[String] = List()
+      val pub = new PublicationResultat
+	  val eu = new ElectionUtilities
+	  val mode = eu.SelectElectionMode(election)
+	  if(mode==1) li = pub.ElectionDeuxTours(election)
+	  if(mode==2) li = pub.ElectionUntour(election)
+	  var i=0
+	    for (i<-0 until li.size)println((i+1) + "-" + li.apply(i))
+   }
+   
    private def ListElectionEnCours:Unit={
 	  val leec = new ElectionUtilities
 	  val l = leec.listeElectionEnCours
@@ -109,26 +132,53 @@ class Utilities {
 	  println("Election ID: ")
 	  val eid = readLine.toInt
 	  val e = new Electeur
-	  e.ajouterCandidat(eid)
-	  println("Ajout du candidat avec succès")
+	  e.ajouterCandidat(id,eid)
+	  println("Merci!")
    }
    
    private def AddElectionNationale:Unit={
      var nom:String=""
-     var date:String=""
+     var dateDebut:String=""
+     var dateFin:String=""
      var mode:Int=0
      
-     println("AJOUT D'UNE ELECTION")
+     println("AJOUT D'UNE ELECTION NATIONALE")
      print("Nom: ")
      nom = readLine
-     print("Date: ")
-     date = readLine
+     print("Date debut: ")
+     dateDebut = readLine
+     print("Date Fin: ")
+     dateFin = readLine
      print("Mode de Scrutin: ")
      mode = readLine.toInt
      
-     val e = new ElectionNationale(1,"France",nom,date,mode)
+     val e = new ElectionNationale(1,"France",nom,dateDebut,dateFin,mode)
      e.saveToDB
-     println("Election ajoutée avec succès")
+     println("Merci!")
+     readLine
+   }
+   private def AddElectionRegionale:Unit={
+     var nom:String=""
+     var region:Int=0
+     var dateDebut:String=""
+     var dateFin:String=""
+     var mode:Int=0
+     
+     println("AJOUT D'UNE ELECTION REGIONALE")
+     print("Nom: ")
+     nom = readLine
+     print("Region: ")
+     region = readLine.toInt
+     print("Date debut: ")
+     dateDebut = readLine
+     print("Date Fin: ")
+     dateFin = readLine
+     print("Mode de Scrutin: ")
+     mode = readLine.toInt
+     
+     val e = new ElectionRegionale(region,nom,dateDebut,dateFin,mode)
+     e.saveToDB
+     println("Merci")
      readLine
    }
    

@@ -35,6 +35,6 @@ trait BulletinDeVote {
 		prepare2.executeUpdate()
 		c.close()
 		}
-		else println("Vous avez déjà voté")
+		else println("Merci !")
 }
 }

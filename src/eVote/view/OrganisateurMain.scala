@@ -4,7 +4,6 @@ import eVote.controler.DBConnexion
 import eVote.model.Election
 import java.sql.DriverManager
 import java.sql.Connection
-import eVote.model.Organisateur
 import eVote.model.Personne
 import scala.swing._
 import event._
@@ -14,10 +13,11 @@ import javax.swing.JFrame
 import eVote.model.ElectionNationale
 import eVote.model.ModeScrutin
 import eVote.model.ElectionNationale
-import eVote.controler.Utilities
+import eVote.controler.UtilitiesOrganisateur
+import eVote.model.Organisateur
 
 
-object main {
+object OrganisateurMain {
 	def main(args: Array[String]):Unit={
 		var test = false
 		var sLogin=""
@@ -33,7 +33,7 @@ object main {
 		test = p.seConnecter(sLogin, sMdp)
 		}
 		
-		val m = new Utilities
+		val m = new UtilitiesOrganisateur
 		while(c!=16){
 			c = m.choixMenu	
 			m.matchTestPrincipale(c)

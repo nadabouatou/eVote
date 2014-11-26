@@ -32,10 +32,10 @@ class Electeur extends Personne with BulletinDeVote with Candidat{
 			prepare.executeUpdate()
 			c.close()
 	}
-	  def ajouterCandidat(pElectionId:Int):Unit={
+	  def ajouterCandidat(pCandidatId:Int, pElectionId:Int):Unit={
 		var c = DBConnexion.conn()
 		var statement = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
-		var prepare = c.prepareStatement("INSERT INTO candidat (codecandidat, electionid) VALUES('"+uid+"', '"+pElectionId+"')")
+		var prepare = c.prepareStatement("INSERT INTO candidat (codecandidat, electionid) VALUES('"+pCandidatId+"', '"+pElectionId+"')")
 		prepare.executeUpdate()
 		c.close()
 	}
