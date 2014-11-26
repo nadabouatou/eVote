@@ -195,3 +195,9 @@ trait Personne extends Utilisateur{
 		c.close()
 	}
 }
+
+object Personne{
+	def apply(s: String)= s match{
+	  case "electeur" => new Electeur()
+	}
+}

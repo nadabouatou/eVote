@@ -12,3 +12,9 @@ trait Utilisateur{
 	def seDeconnecter(login: String):Boolean
 
 }
+
+object Utilisateur{
+	def apply(s: String)= s match{
+	  case "organisateur" => new Organisateur()
+	}
+}

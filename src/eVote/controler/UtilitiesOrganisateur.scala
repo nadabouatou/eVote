@@ -131,7 +131,7 @@ class UtilitiesOrganisateur {
 	  val id = readLine.toInt
 	  println("Election ID: ")
 	  val eid = readLine.toInt
-	  val e = new Electeur
+	  val e = Personne("electeur")
 	  e.ajouterCandidat(id,eid)
 	  println("Merci!")
    }

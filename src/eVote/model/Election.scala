@@ -10,7 +10,7 @@ trait Election{
   var dateFinElection:String=_
   var modeDeScrutin:Int=_
   
-  def modifierElection(elction: Int):Unit={
+  def modifierElection(election: Int):Unit={
 	  
 	}
   def supprimerElection(election:Int): Unit={

@@ -15,6 +15,7 @@ import eVote.model.ModeScrutin
 import eVote.model.ElectionNationale
 import eVote.controler.UtilitiesOrganisateur
 import eVote.model.Organisateur
+import eVote.model.Utilisateur
 
 
 object OrganisateurMain {
@@ -24,7 +25,7 @@ object OrganisateurMain {
 		var sMdp=""
 		var c:Int=0
 		  
-		val p = new Organisateur()
+		val p = Utilisateur("organisateur")
 		while (test==false){
 		print("Login: ")
 		sLogin = readLine();

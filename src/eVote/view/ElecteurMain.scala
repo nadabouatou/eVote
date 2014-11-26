@@ -1,6 +1,7 @@
 package eVote.view
 
 import eVote.model.Electeur
+import eVote.model.Personne
 import eVote.controler.UtilitiesElecteur
 
 object ElecteurMain {
@@ -10,7 +11,7 @@ object ElecteurMain {
 		var sMdp=""
 		var c:Int=0
 		  
-		val el = new Electeur()
+		val el = Personne("electeur")
 		while (test==false){
 		print("Login: ")
 		sLogin = readLine();
